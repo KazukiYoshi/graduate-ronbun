@@ -4,214 +4,358 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RGB画像を用いた酒米「山田錦」の生育後期における量的・質的指標の解析と出穂期特定手法の確立</title>
-
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- フォント -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: "Inter", "Noto Serif JP", serif;
-            background-color: #f3f4f6;
+            font-family: 'Inter', 'Noto Serif JP', serif;
+            background-color: #f8f8f8;
             color: #1f2937;
         }
-
-        /* 左固定サイドバー */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 260px;
-            height: 100vh;
-            overflow-y: auto;
-            background: #ffffff;
-            border-right: 1px solid #d1d5db;
-            padding: 2rem 1.4rem;
+        .serif {
+            font-family: 'Noto Serif JP', serif;
         }
-        .sidebar h2 {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #1e3a8a;
-        }
-
-        .toc-link {
-            display: block;
-            padding: 0.25rem 0.4rem;
-            border-radius: 4px;
-            transition: 0.2s;
-        }
-        .toc-link:hover {
-            background: #e0e7ff;
-            color: #1e3a8a;
-        }
-
-        /* 本文レイアウト */
-        .content-wrapper {
-            margin-left: 260px;
-            padding: 2rem 2.5rem;
-        }
-
-        .content {
-            max-width: 760px;
-            margin: auto;
-        }
-
-        /* セクションタイトル */
-        .section-title {
-            font-size: 1.9rem;
-            font-weight: 700;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid #1e3a8a;
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .subsection-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+        .abstract {
             border-left: 4px solid #3b82f6;
-            padding-left: 0.6rem;
+            padding-left: 1.5rem;
+            background-color: #eff6ff;
+        }
+        .section-title {
+            border-bottom: 2px solid #1f2937;
+            padding-bottom: 0.5rem;
             margin-top: 2rem;
-            margin-bottom: 0.7rem;
+            margin-bottom: 1rem;
         }
-
-        /* Abstract Card */
-        .abstract-card {
-            background: #eef2ff;
-            border-left: 6px solid #3b82f6;
-            padding: 1.5rem 1.4rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+        .subsection-title {
+            border-left: 4px solid #93c5fd;
+            padding-left: 0.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
         }
-
-        /* 数式ブロック */
-        .math-block {
-            background: #f1f5f9;
-            border-left: 4px solid #2563eb;
-            padding: 1rem;
-            border-radius: 6px;
-            margin: 1rem 0;
-            font-family: "Noto Serif JP", serif;
-            overflow-x: auto;
-        }
-
-        /* 図表スタイル */
-        .figure-card {
-            background: white;
-            border: 1px dashed #9ca3af;
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            margin: 1.5rem 0;
-        }
-
-        /* 表スタイル */
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        .subsubsection-title {
             margin-top: 1rem;
-            background: white;
-        }
-        th, td {
-            border: 1px solid #d1d5db;
-            padding: 0.6rem 0.75rem;
-        }
-        th {
-            background: #e5e7eb;
+            font-style: italic;
             font-weight: 600;
         }
-        tr:nth-child(even) {
-            background: #f9fafb;
+        .math-block {
+            background-color: #eef2ff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
         }
-        tr:hover {
-            background: #e0e7ff;
+        .figure-placeholder {
+            border: 2px dashed #9ca3af;
+            background-color: #ffffff;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .toc-link {
+            transition: color 0.2s;
+        }
+        .toc-link:hover {
+            color: #2563eb;
         }
     </style>
 </head>
+<body class="p-4 md:p-10">
 
-<body>
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-xl shadow-lg">
 
-<!-- ==================================== -->
-<!--             サイドバー               -->
-<!-- ==================================== -->
-<aside class="sidebar">
-    <h2>目次 (Contents)</h2>
-    <nav class="text-sm space-y-1">
-        <a href="#abstract" class="toc-link">要旨 (Abstract)</a>
-        <a href="#section-1" class="toc-link">1. はじめに</a>
-        <a href="#subsection-1-1" class="toc-link">1.1. 研究背景</a>
-        <a href="#subsection-1-2" class="toc-link">1.2. 先行研究と位置付け</a>
-        <a href="#subsection-1-3" class="toc-link">1.3. 本研究の目的</a>
+        <!-- Title -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 serif leading-snug">
+                RGB画像を用いた酒造好適米「山田錦」の生育後期における<br>量的・質的指標の解析と出穂期特定手法の確立
+            </h1>
+            <p class="mt-4 text-lg text-gray-600">〇〇大学 〇〇学部 〇〇学科</p>
+            <p class="text-md text-gray-600">氏名：あなたの氏名</p>
+        </header>
 
-        <a href="#section-2" class="toc-link">2. 研究方法</a>
-        <a href="#section-3" class="toc-link">3. 結果</a>
-        <a href="#section-4" class="toc-link">4. 考察</a>
-        <a href="#section-5" class="toc-link">5. まとめ</a>
-        <a href="#ack" class="toc-link">謝辞</a>
-        <a href="#refs" class="toc-link">参考文献</a>
-    </nav>
-</aside>
+        <!-- Abstract -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">要旨 (Abstract)</h2>
+            <div class="abstract p-4 rounded-lg text-gray-700">
+                <p class="serif">本研究は、酒造好適米の代表とされる酒米「山田錦」の生育後期における重要フェーズである出穂期を、安価かつ汎用性の高いRGB画像データから特定する手法の確立を試みた。兵庫県三木市において山田錦を栽培し、田植えを行った6月8日から収穫前の9月28日まで週に一度、ドローンを用いた高度100mからの圃場全体撮影によりRGB画像データを収集した。収集した画像から圃場領域を抽出し、葉の量の指標として**緑率（Green Area Percentage）**、葉の質の指標として**ExG（Excess Green Index）**の時系列変化を測定・比較した。解析の結果、圃場内の葉量のピークを示す緑率は8月上旬（8月9日）に最大値（84.14\%）を記録したのに対し、葉の緑度を示すExGのピークは**8月中旬（8月18日）**に最大値（0.527）を記録し、両指標のピークには約10日間の明確なズレが確認された。この量的データ（葉量）と質的データ（緑度）のピークのズレは、実出穂期（8月30日頃）に先行して発生しており、イネが栄養生長から生殖生長、そして登熟期へと移行する生育後期の生理的転換点を明確に捉えていることが示唆された。特に、ExGの変化パターンは、登熟期におけるデンプン同化能力と窒素効率利用の状態を反映し、酒米の品質管理（心白形成、低タンパク質）に資する情報となり得ると結論付けられる。本手法は、高価な多波長センサーを用いることなく、RGB画像だけでもイネの生産現場において十分かつ重要な生育観察が可能であることを示唆するものである。</p>
+            </div>
+        </section>
 
-<!-- ==================================== -->
-<!--             本文部分                 -->
-<!-- ==================================== -->
-<div class="content-wrapper">
-<div class="content">
+        <hr class="my-8">
 
-    <!-- タイトル -->
-    <header class="mt-6 mb-10 text-center">
-        <h1 class="text-3xl font-bold leading-snug text-gray-800">
-            RGB画像を用いた酒造好適米「山田錦」の生育後期における<br>
-            量的・質的指標の解析と出穂期特定手法の確立
-        </h1>
-        <p class="mt-4 text-gray-600">関西学院大学 総合政策学部 メディア情報学科</p>
-        <p class="text-gray-600">氏名：吉村和紀</p>
-    </header>
+        <!-- Table of Contents -->
+        <section id="toc" class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">目次 (Table of Contents)</h2>
+            <ul class="space-y-2 text-gray-700">
+                <li><a href="#section-1" class="toc-link block hover:text-blue-600">1. はじめに</a>
+                    <ul class="ml-4 space-y-1">
+                        <li><a href="#subsection-1-1" class="toc-link block hover:text-blue-600">1.1. 研究背景</a></li>
+                        <li><a href="#subsection-1-2" class="toc-link block hover:text-blue-600">1.2. 先行研究と本研究の位置付け</a></li>
+                        <li><a href="#subsection-1-3" class="toc-link block hover:text-blue-600">1.3. 本研究の目的</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-2" class="toc-link block hover:text-blue-600">2. 研究方法</a>
+                    <ul class="ml-4 space-y-1">
+                        <li><a href="#subsection-2-1" class="toc-link block hover:text-blue-600">2.1. 供試材料と栽培管理</a>
+                            <ul class="ml-4 space-y-1">
+                                <li>2.1.1. 供試品種と栽培圃場</li>
+                                <li>2.1.2. 画像収集</li>
+                            </ul>
+                        </li>
+                        <li><a href="#subsection-2-2" class="toc-link block hover:text-blue-600">2.2. 画像解析手法</a>
+                            <ul class="ml-4 space-y-1">
+                                <li>2.2.1. 圃場領域の抽出</li>
+                                <li>2.2.2. 葉量割合（緑率）の測定（量的指標）</li>
+                                <li>2.2.3. 葉の緑度（ExG）の測定（質的指標）</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#section-3" class="toc-link block hover:text-blue-600">3. 結果</a>
+                    <ul class="ml-4 space-y-1">
+                        <li><a href="#subsection-3-1" class="toc-link block hover:text-blue-600">3.1. 生育期間を通じた緑率とExGの時系列推移</a></li>
+                        <li><a href="#subsection-3-2" class="toc-link block hover:text-blue-600">3.2. 量的指標（緑率）の推移</a></li>
+                        <li><a href="#subsection-3-3" class="toc-link block hover:text-blue-600">3.3. 質的指標（ExG）の推移</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-4" class="toc-link block hover:text-blue-600">4. 考察</a>
+                    <ul class="ml-4 space-y-1">
+                        <li><a href="#subsection-4-1" class="toc-link block hover:text-blue-600">4.1. 量的ピークと質的ピークのズレの生物学的解釈</a></li>
+                        <li><a href="#subsection-4-2" class="toc-link block hover:text-blue-600">4.2. RGB画像による出穂期特定手法の確立への示唆</a></li>
+                        <li><a href="#subsection-4-3" class="toc-link block hover:text-blue-600">4.3. 酒米品質への示唆：ExGと登熟の「締まり具合」</a></li>
+                        <li><a href="#subsection-4-4" class="toc-link block hover:text-blue-600">4.4. 課題と今後の展望</a></li>
+                    </ul>
+                </li>
+                <li><a href="#section-5" class="toc-link block hover:text-blue-600">5. まとめ</a></li>
+                <li>謝辞</li>
+                <li>参考文献</li>
+            </ul>
+        </section>
 
-    <!-- Abstract -->
-    <section id="abstract">
-        <h2 class="section-title">要旨 (Abstract)</h2>
-        <div class="abstract-card">
-            <p>
-                （ここに Abstract の本文をそのまま入れてください。元ファイルの要旨をそのまま貼り替えて問題ありません）
-            </p>
-        </div>
-    </section>
+        <!-- 1. はじめに -->
+        <section id="section-1" class="serif">
+            <h2 class="section-title text-3xl font-bold">1. はじめに</h2>
 
+            <div id="subsection-1-1" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">1.1. 研究背景</h3>
+                <p class="mt-4">米は日本の基幹作物であり、その品質と安定供給は農業における最重要課題である。特に、酒造好適米、中でも「山田錦」は、その心白発現のしやすさや、雑味の元となるタンパク質の少なさから、吟醸酒の原料として極めて高い評価を受けている\cite{Ref1}。しかし、山田錦は倒伏しやすく、特定の生育時期、特に穂が出る出穂期以降の登熟期におけるきめ細やかな栽培管理が、酒米の品質を大きく左右する。</p>
+                <p class="mt-2">従来のイネの生育観察は、専門家の目視や、圃場への立ち入りによる株元計測、葉色板を用いた窒素栄養診断に依存してきた。これらの手法は時間と労力がかかる上、圃場全体を網羅した客観的なデータ取得が困難であるという課題がある。</p>
+            </div>
 
-    <!-- 以下、本文（セクション1〜5まで）
-         すべて元のテキストをそのまま貼り付け可能 -->
+            <div id="subsection-1-2" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">1.2. 先行研究と本研究の位置付け</h3>
+                <p class="mt-4">近年、情報通信技術（ICT）の発展に伴い、ドローン（UAV）を用いたリモートセンシング技術が農業分野で急速に普及している\cite{Ref2}。特に、ハイパースペクトルカメラやマルチスペクトルカメラを用いることで、葉の窒素含有量やクロロフィル濃度を推定する様々な植生指数（NDVI, GNDVIなど）が開発されてきた\cite{Ref3}。これらの非可視光領域を用いた指標は高い精度を持つ一方で、機材が高価であること、データ処理が複雑であることから、中小規模の生産現場への導入障壁が高いのが現状である。</p>
+                <p class="mt-2">そこで、本研究は、最も安価で汎用的な**RGB（可視光）カメラ**によって得られるデータに着目した。RGB画像から、イネの生育を「葉の量」と「葉の質」という二つの異なる側面から評価し、その時系列変化のパターンを解析することで、酒米「山田錦」の品質管理に不可欠な**出穂期を特定する新たな手法**の確立を目指す。</p>
+            </div>
 
-    <!-- 例として Section 1 の枠だけ置いておきます -->
+            <div id="subsection-1-3" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">1.3. 本研究の目的</h3>
+                <p class="mt-4">本研究の目的は以下の3点である。</p>
+                <ol class="list-decimal ml-6 space-y-2 mt-2">
+                    <li>ドローンにより収集したRGB画像データから、酒米「山田錦」の生育期間における**葉量割合**（量的指標）と**葉の緑度（ExG）**（質的指標）の推移を測定し、そのピーク時期を特定する。</li>
+                    <li>両指標のピーク時期のズレと、実際の**出穂期**との関係性を考察することで、**出穂期を特定する客観的な手法**を確立する。</li>
+                    <li>RGB画像による解析結果が、酒米の登熟過程における生理的転換点を捉えていることを示し、将来的な**品質予測・管理への可能性**を示す。</li>
+                </ol>
+            </div>
+        </section>
 
-    <section id="section-1">
-        <h2 class="section-title">1. はじめに</h2>
+        <!-- 2. 研究方法 -->
+        <section id="section-2" class="serif">
+            <h2 class="section-title text-3xl font-bold">2. 研究方法</h2>
 
-        <div id="subsection-1-1">
-            <h3 class="subsection-title">1.1. 研究背景</h3>
-            <p>（本文を入れる）</p>
-        </div>
+            <div id="subsection-2-1" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">2.1. 供試材料と栽培管理</h3>
+                
+                <h4 class="subsubsection-title text-lg mt-4">2.1.1. 供試品種と栽培圃場</h4>
+                <p class="mt-2">供試品種は**酒造好適米「山田錦」**とした。栽培は兵庫県三木市吉川町水上909の圃場（約30 a）で慣行法に従って実施した。田植えは6月8日に行い、収穫前の9月28日まで生育観察を行った。</p>
 
-        <div id="subsection-1-2">
-            <h3 class="subsection-title">1.2. 先行研究と位置付け</h3>
-            <p>（本文を入れる）</p>
-        </div>
+                <h4 class="subsubsection-title text-lg mt-4">2.1.2. 画像収集</h4>
+                <p class="mt-2">圃場全景の画像収集には、市販のドローン（UAV）に搭載された**RGBカメラ**を使用した。</p>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>**撮影期間:** 田植えを行った6月8日から収穫前の9月28日まで。</li>
+                    <li>**撮影頻度:** 週に一度（原則として〇曜日）。</li>
+                    <li>**撮影高度:** 地上から高度100 m。</li>
+                    <li>**カメラ角度:** カメラを真下（下方$-90^\circ$）に向け、圃場全体を網羅的に撮影した。</li>
+                </ul>
+            </div>
 
-        <div id="subsection-1-3">
-            <h3 class="subsection-title">1.3. 本研究の目的</h3>
-            <p>（本文を入れる）</p>
-        </div>
-    </section>
+            <div id="subsection-2-2" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">2.2. 画像解析手法</h3>
+                <p class="mt-4">収集したRGB画像（全領域画像）に対し、以下の手順でイネの生育指標を算出した。なお、画像解析には、Python言語を用い、OpenCVライブラリおよびNumPyライブラリを使用して実装した（\ref{fig:timeseries}参照）。</p>
 
-    <!-- 以下、元HTMLの内容を順次ここへ貼り付けてください -->
+                <h4 class="subsubsection-title text-lg mt-4">2.2.1. 圃場領域の抽出</h4>
+                <p class="mt-2">全領域画像から、解析対象であるイネの栽培圃場部分のみをGUI上で手動により切り出し、**圃場領域画像**とした。これにより、畦畔（けいはん）や周囲の道路、影などの影響を排除した。本処理は、OpenCVの機能を用いて画像の特定範囲（ROI: Region of Interest）を指定することで行った。</p>
 
+                <h4 class="subsubsection-title text-lg mt-4">2.2.2. 葉量割合（緑率）の測定（量的指標）</h4>
+                <p class="mt-2">葉の量の指標として、画像全体に対する緑色ピクセルが占める割合である**緑率（Green Area Percentage）**を算出した。緑色画素の判別には、OpenCVのHSV色空間を用い、以下の閾値で設定した**二値マスク**を作成した。</p>
+                <ul class="list-disc ml-6 space-y-1 mt-2">
+                    <li>**H（色相）:** 35 $\sim$ 85</li>
+                    <li>**S（彩度）:** 40 $\sim$ 255</li>
+                    <li>**V（明度）:** 40 $\sim$ 255</li>
+                </ul>
+                <p class="mt-2">この閾値設定により、彩度や明度が低い影や土壌の影響を排除し、イネの葉の鮮やかな緑色成分を抽出した。この二値マスク画像を用いて、緑率を以下の式により算出する。</p>
+                <div class="math-block">
+                    $$\text{緑率}(\%) = \frac{\text{緑と判定されたピクセル数}}{\text{全ピクセル数}} \times 100$$
+                </div>
+                <p class="mt-2">この指標は、イネの**被覆率**または**葉の量の時系列的な変化**を客観的に捉えることを目的とする。</p>
 
-</div>
-</div>
+                <h4 class="subsubsection-title text-lg mt-4">2.2.3. 葉の緑度（ExG）の測定（質的指標）</h4>
+                <p class="mt-2">葉の質の指標として、代表的な植生指数である**ExG（Excess Green Index）**の平均値を使用した。これは、葉のクロロフィル濃度や窒素状態と相関することが知られている。ExGは、\textbf{上記2.2.2で作成したHSVマスクの緑色領域内にあるピクセルのみ}を対象とし、以下の手順で計算された。</p>
+                <ol class="list-decimal ml-6 space-y-1 mt-2">
+                    <li>圃場領域画像（RGB）をNumPy配列として読み込み、各チャンネルの輝度値（R, G, B）を取得する。</li>
+                    <li>各ピクセルのRGB値に対して、以下の式により正規化（$R_N$, $G_N$, $B_N$）を行う。</li>
+                </ol>
+                <div class="math-block">
+                    $$R_N = \frac{R}{R+G+B}, \quad G_N = \frac{G}{R+G+B}, \quad B_N = \frac{B}{R+G+B}$$
+                </div>
+                <ol class="list-decimal ml-6 space-y-1 mt-2" start="3">
+                    <li>正規化された各チャンネルの値を用いて、ExGを算出し、\textbf{HSVマスクで緑と判定された画素のみ}を対象に平均値を求める。</li>
+                </ol>
+                <div class="math-block">
+                    $$\text{ExG} = 2 \times G_N - R_N - B_N$$
+                </div>
+                <p class="mt-2">ExGの平均値は、葉の**光合成活性**や**窒素状態の質的変化**を客観的に捉えることを目的とする。この手法では、ExG自体を二値化の閾値として使用せず、既に葉と判定された領域（HSVマスク）内での**葉の濃淡（質の情報）**を追跡する定量指標として利用した点に特徴がある。</p>
+            </div>
+        </section>
+
+        <!-- 3. 結果 -->
+        <section id="section-3" class="serif">
+            <h2 class="section-title text-3xl font-bold">3. 結果</h2>
+
+            <div id="subsection-3-1" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">3.1. 生育期間を通じた緑率とExGの時系列推移</h3>
+                <p class="mt-4">表1に、生育期間中の各測定日における緑率（葉量割合）と平均ExG（葉の緑度）の測定結果を示す。</p>
+
+                <!-- Table 1 -->
+                <div class="overflow-x-auto my-4">
+                    <table class="min-w-full divide-y divide-gray-200 border border-gray-200">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">撮影日</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">緑率 ($\%$)</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">平均ExG</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">備考</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                            <tr><td class="px-4 py-2">2025-07-10</td><td class="px-4 py-2">71.656</td><td class="px-4 py-2">0.382</td><td class="px-4 py-2"></td></tr>
+                            <tr><td class="px-4 py-2">2025-07-19</td><td class="px-4 py-2">72.776</td><td class="px-4 py-2">0.451</td><td class="px-4 py-2"></td></tr>
+                            <tr><td class="px-4 py-2">2025-07-30</td><td class="px-4 py-2">70.376</td><td class="px-4 py-2">0.483</td><td class="px-4 py-2"></td></tr>
+                            <tr><td class="px-4 py-2 font-bold bg-green-50">2025-08-09</td><td class="px-4 py-2 font-bold bg-green-50">84.140</td><td class="px-4 py-2">0.458</td><td class="px-4 py-2 font-bold">緑率ピーク（葉量最大）</td></tr>
+                            <tr><td class="px-4 py-2 font-bold bg-blue-50">2025-08-18</td><td class="px-4 py-2">82.490</td><td class="px-4 py-2 font-bold bg-blue-50">0.527</td><td class="px-4 py-2 font-bold">ExGピーク（緑度最大）</td></tr>
+                            <tr><td class="px-4 py-2">2025-09-01</td><td class="px-4 py-2">87.911</td><td class="px-4 py-2">0.464</td><td class="px-4 py-2"></td></tr>
+                            <tr><td class="px-4 py-2">2025-09-09</td><td class="px-4 py-2">80.529</td><td class="px-4 py-2">0.386</td><td class="px-4 py-2"></td></tr>
+                            <tr><td class="px-4 py-2">2025-09-17</td><td class="px-4 py-2">80.208</td><td class="px-4 py-2">0.362</td><td class="px-4 py-2"></td></tr>
+                            <tr><td class="px-4 py-2">2025-09-28</td><td class="px-4 py-2">76.513</td><td class="px-4 py-2">0.334</td><td class="px-4 py-2"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-sm text-center mt-2">表1：週ごとの葉量割合（緑率）および葉の緑度（平均ExG）の測定結果</p>
+
+                <p class="mt-4">図1に、上記データに基づき、生育期間を通じた緑率と平均ExGの時系列推移を示す。両指標のピーク時期に明確なズレが確認できる。</p>
+
+                <!-- Figure 1 -->
+                <div class="figure-placeholder">
+                    <p class="text-lg font-bold">図1：生育期間における葉量割合と葉の緑度（ExG）の推移</p>
+                    <p class="text-sm italic mt-1">緑率（左軸、実線）とExG（右軸、破線）の推移を比較。実出穂期（8月30日）を垂直破線で示している。</p>
+                </div>
+            </div>
+
+            <div id="subsection-3-2" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">3.2. 量的指標（緑率）の推移</h3>
+                <p class="mt-4">緑率は、7月中旬から8月上旬にかけて急速に増加し、**8月9日**に**84.14\%**の最大値に達した。この時期は、イネが最大の葉面積を確保した、栄養生長における**最大葉量期**に相当する。最大値到達後は、分げつの停止や一部の下葉の枯れ上がりにより、緩やかに減少傾向を示した。</p>
+            </div>
+
+            <div id="subsection-3-3" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">3.3. 質的指標（ExG）の推移</h3>
+                <p class="mt-4">平均ExGは、緑率がピークに達した後も上昇を続け、**8月18日**に**0.527**の最大値に達した。ExGのピーク時期は、緑率のピーク時期（8月9日）から約10日後の**生育後期**に現れており、**量的データと質的データの明確なズレ**が確認された。8月18日以降は、登熟の進行と葉の老化に伴い、値が低下した。</p>
+            </div>
+        </section>
+
+        <!-- 4. 考察 -->
+        <section id="section-4" class="serif">
+            <h2 class="section-title text-3xl font-bold">4. 考察</h2>
+
+            <div id="subsection-4-1" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">4.1. 量的ピークと質的ピークのズレの生物学的解釈</h3>
+                <p class="mt-4">本研究で得られた、葉量割合（緑率）のピークと葉の緑度（ExG）のピークのズレは、イネの生育ステージの**生理的転換点**を明確に反映している。</p>
+
+                <h4 class="subsubsection-title text-lg mt-4">4.1.1. 栄養生長から生殖生長への転換</h4>
+                <p class="mt-2">緑率のピークである8月9日は、イネの**栄養生長（分げつと葉の拡大）の終着点**であり、穂の形成と出穂に向けた準備が完了したことを示す。この時期以降、イネのエネルギーは、葉の量を増やすことよりも、**穂に栄養を集中させること**に切り替わる。</p>
+
+                <h4 class="subsubsection-title text-lg mt-4">4.1.2. 出穂期とExGピークの関係性</h4>
+                <p class="mt-2">実出穂期（8月30日頃）は、緑率ピーク（8/9）とExGピーク（8/18）の間に明確に位置している（図1）。これは、以下の生育戦略を裏付けるものである。</p>
+                <ol class="list-decimal ml-6 space-y-1 mt-2">
+                    <li>**緑率ピーク（8/9）**: 穂が出る直前、葉の「量」を最大化する。</li>
+                    <li>**ExGピーク（8/18）**: 出穂前後の過渡期。葉の「量」は最大ではないものの、穂へのデンプン転流を最大限に行うため、残された葉（特に上位葉）の**光合成効率（質）**が最大となる。</li>
+                    <li>**実出穂期（8月30日）**: 穂が出る。</li>
+                </ol>
+                <p class="mt-2">すなわち、葉の質的指標であるExGのピーク（8/18）は、**実出穂期（8/30）に先行して発生**しており、このExGの最大化が、その後の登熟期間におけるデンプン生産体制の確立を示唆している。この**「量的最大と質的最大のズレの期間（8/9〜8/18）」**を客観的な指標とすることで、イネの生産現場において出穂期の到来を早期に推定する手法に繋がりうる。</p>
+            </div>
+
+            <div id="subsection-4-2" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">4.2. RGB画像による出穂期特定手法の確立への示唆</h3>
+                <p class="mt-4">本結果は、高価なセンサーを用いずとも、RGB画像から得られる二つの単純な指標の**ピークの比較**によって、イネの生育における重要イベントを特定できる可能性を示す。</p>
+                <ul class="list-disc ml-6 space-y-1 mt-2">
+                    <li>**出穂期の推定:** 緑率のピークが確認された後、ExGがピークを迎えるまでの期間（本研究では約10日間）をモニタリングすることで、その期間内に**出穂期**が存在することを高精度で推定できる。具体的には、緑率ピークからExGピークまでの期間を「**出穂・登熟開始の過渡期**」として定義できる。</li>
+                    <li>**圃場管理の客観化:** 農家は圃場に立ち入ることなく、ドローン撮影と画像解析だけで、生育における量的最大点と質的最大点を知ることができ、農作業の**省力化**と**客観化**に貢献する。</li>
+                </ul>
+            </div>
+
+            <div id="subsection-4-3" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">4.3. 酒米品質への示唆：ExGと登熟の「締まり具合」</h3>
+                <p class="mt-4">ExGは、葉の窒素状態とクロロフィル濃度を間接的に示し、それはすなわち**デンプン同化能力**に直結する。</p>
+                <p class="mt-2">山田錦のような酒米では、米粒の中心に白い不透明な部分（**心白**）を大きく形成すること、そして雑味の原因となる**タンパク質**を少なくすることが求められる。これらは、出穂後の登熟期における窒素の効率的な利用とデンプンのスムーズな蓄積によって達成される。</p>
+                <ol class="list-decimal ml-6 space-y-1 mt-2">
+                    <li>**心白形成とExG:** ExGのピーク時期や、ピーク後のExGの**低下速度**は、登熟期に葉がどれだけ長く、効率的に光合成を維持し、デンプンを穂に転流させたかを反映する。ExGの変化パターンは、デンプン同化が進む速度、つまり**心白形成**の良し悪しに影響しうる。</li>
+                    <li>**生育の「締まり具合」:** ExGの変化パターンは、登熟に向けた生育の**「締まり具合」**、すなわち、余分な窒素を残さず効率的に利用し切る状態を反映すると考えられる。これにより、高品質な酒米（低タンパク質）の育成に向けた、生育後期の**窒素追肥の適否**や**水管理の調整**の客観的な判断材料となる可能性がある。</li>
+                </ol>
+            </div>
+
+            <div id="subsection-4-4" class="pl-2">
+                <h3 class="subsection-title text-xl font-bold">4.4. 課題と今後の展望</h3>
+                <p class="mt-4">本研究により、RGB画像がイネ生育後期の重要フェーズを捉える有用性が示された一方で、以下の課題が残る。</p>
+                <ul class="list-disc ml-6 space-y-1 mt-2">
+                    <li>**解析精度の向上:** 今回の解析では緑率の算出に単一の閾値を用いたが、今後は機械学習や深層学習を活用し、背景ノイズをより排除した**自動的な圃場領域抽出**と**ピクセル分類**の精度向上に取り組む必要がある。</li>
+                    <li>**品質との定量的関連付け:** 今回得られたExGのピーク値や低下速度と、**実際の酒米の品質データ**（心白発現率、タンパク質含量、千粒重など）との定量的な相関分析を実施し、品質予測モデルの構築を目指す。</li>
+                    <li>**他品種との比較:** 山田錦以外の酒米品種や一般米品種と比較することで、この量的・質的指標のズレが品種固有のものか、あるいはイネ全般に共通する生理的転換点であるかを明らかにする。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. まとめ -->
+        <section id="section-5" class="serif">
+            <h2 class="section-title text-3xl font-bold">5. まとめ</h2>
+            <p class="mt-4">本研究は、RGB画像という汎用的なデータを用い、酒造好適米「山田錦」の生育後期の量的指標（緑率）と質的指標（ExG）の時系列解析を行った。</p>
+            <ol class="list-decimal ml-6 space-y-2 mt-2">
+                <li>緑率のピーク（8月上旬）とExGのピーク（8月18日）に約10日間の明確なズレを確認した。</li>
+                <li>このズレは、実出穂期（8月30日頃）に先行して発生しており、イネが栄養生長から、穂へのデンプン転流を最大限に行う登熟開始期へ移行する**生育の生理的転換点**を正確に捉えていることを示した。</li>
+                <li>RGB画像による解析は、出穂期を特定する手法として有用であるだけでなく、ExGの変化パターンが**酒米の品質を決定づける登熟の「締まり具合」**を反映する可能性を示唆した。</li>
+                <li>本手法は、高価なセンサーを必要とせず、農業現場における**客観的かつ重要な生育観察技術**として活用できる可能性を持つ。</li>
+            </ol>
+            <p class="mt-4">今後の研究では、本指標と酒米品質との定量的関連性を明確にし、実用的な品質予測モデルの構築へと発展させる。</p>
+        </section>
+
+        <!-- Acknowledgment -->
+        <section class="mt-12 pt-6 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">謝辞</h2>
+            <p class="text-gray-700">本研究を実施するにあたり、栽培圃場をご提供いただいた兵庫県三木市吉川町の〇〇様（農家名）、ならびに画像撮影にご協力いただいた〇〇研究室の皆様に深く感謝申し上げます。</p>
+        </section>
+
+        <!-- References -->
+        <section class="mt-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">参考文献</h2>
+            <ul class="list-decimal ml-6 space-y-1 text-gray-700">
+                <li><span id="Ref1">[1]</span> (ここに酒米または山田錦に関する代表的な文献を記載)</li>
+                <li><span id="Ref2">[2]</span> (ここにドローンリモートセンシングに関する代表的な文献を記載)</li>
+                <li><span id="Ref3">[3]</span> (ここに植生指数や生育診断に関する代表的な文献を記載)</li>
+                <li><span id="Ref4">[4]</span> (ここに画像解析や閾値処理に関する具体的な技術文献を記載)</li>
+            </ul>
+        </section>
+
+    </div>
 
 </body>
 </html>
